@@ -8,7 +8,7 @@ import com.mydrive.service.ShareService;
 import com.mydrive.util.UserContext;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -71,8 +70,7 @@ public class ShareController {
             throw new IllegalArgumentException("文件不存在");
         }
 
-        InputStream inputStream = Files.newInputStream(filePath);
-        Resource resource = new InputStreamResource(inputStream);
+        Resource resource = new FileSystemResource(filePath.toFile());
 
         String encodedFileName = URLEncoder.encode(file.getFileName(), StandardCharsets.UTF_8)
                 .replace("+", "%20");
@@ -100,8 +98,7 @@ public class ShareController {
             throw new IllegalArgumentException("文件不存在");
         }
 
-        InputStream inputStream = Files.newInputStream(filePath);
-        Resource resource = new InputStreamResource(inputStream);
+        Resource resource = new FileSystemResource(filePath.toFile());
 
         String contentType = getPreviewContentType(file.getFileType());
 

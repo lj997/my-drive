@@ -41,6 +41,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { getPreviewUrl, getDownloadUrl } from '@/api/file'
+import { getSharePreviewUrl, getShareDownloadUrl } from '@/api/share'
 
 const props = defineProps({
   file: {
@@ -57,11 +58,16 @@ const visible = defineModel('visible', {
 const loading = ref(false)
 const iframeRef = ref(null)
 
+const isShareMode = computed(() => {
+  return props.file && props.file.shareCode
+})
+
 const previewUrl = computed(() => {
-  if (props.file) {
-    return getPreviewUrl(props.file.id)
+  if (!props.file) return ''
+  if (isShareMode.value) {
+    return getSharePreviewUrl(props.file.shareCode, props.file.sharePassword)
   }
-  return ''
+  return getPreviewUrl(props.file.id)
 })
 
 const isImage = computed(() => {
@@ -86,7 +92,12 @@ const onIframeLoad = () => {
 
 const handleDownload = () => {
   if (!props.file) return
-  const url = getDownloadUrl(props.file.id)
+  let url
+  if (isShareMode.value) {
+    url = getShareDownloadUrl(props.file.shareCode, props.file.sharePassword)
+  } else {
+    url = getDownloadUrl(props.file.id)
+  }
   const link = document.createElement('a')
   link.href = url
   link.download = props.file.fileName

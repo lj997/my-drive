@@ -377,10 +377,10 @@ public class FileService {
         info.put("fileSize", file.getFileSize());
         info.put("fileType", file.getFileType());
         info.put("extension", file.getExtension());
-        info.put("isFolder", file.getIsFolder() == 1);
+        info.put("isFolder", Integer.valueOf(1).equals(file.getIsFolder()));
         info.put("createTime", file.getCreateTime());
         info.put("updateTime", file.getUpdateTime());
-        info.put("deleted", file.getDeleted() == 1);
+        info.put("deleted", Integer.valueOf(1).equals(file.getDeleted()));
         info.put("deleteTime", file.getDeleteTime());
         return info;
     }

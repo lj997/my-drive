@@ -14,9 +14,9 @@ public class Share {
     private String shareCode;
     private String password;
     private LocalDateTime expireTime;
-    private Integer viewCount;
-    private Integer downloadCount;
+    private Integer viewCount = 0;
+    private Integer downloadCount = 0;
     private LocalDateTime createTime;
     @TableLogic
-    private Integer deleted;
+    private Integer deleted = 0;
 }

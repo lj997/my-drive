@@ -51,8 +51,8 @@
           删除
         </el-button>
         <el-radio-group v-model="viewMode" size="small">
-          <el-radio-button label="list">列表</el-radio-button>
-          <el-radio-button label="grid">网格</el-radio-button>
+          <el-radio-button value="list">列表</el-radio-button>
+          <el-radio-button value="grid">网格</el-radio-button>
         </el-radio-group>
       </div>
     </div>
@@ -567,7 +567,7 @@ const handleDeleteFile = async (file) => {
     ElMessage.success('已移到回收站')
     loadFiles()
   } catch (error) {
-    if (error !== 'cancel') {
+    if (error !== 'cancel' && error?.message !== 'cancel') {
       console.error(error)
     }
   }
@@ -586,7 +586,7 @@ const handleDelete = async () => {
     selectedFiles.value = []
     loadFiles()
   } catch (error) {
-    if (error !== 'cancel') {
+    if (error !== 'cancel' && error?.message !== 'cancel') {
       console.error(error)
     }
   }

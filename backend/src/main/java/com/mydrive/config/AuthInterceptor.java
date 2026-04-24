@@ -33,6 +33,10 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         if (!StringUtils.hasText(token)) {
+            token = request.getParameter("token");
+        }
+
+        if (!StringUtils.hasText(token)) {
             writeErrorResponse(response, 401, "未登录，请先登录");
             return false;
         }

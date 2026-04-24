@@ -16,10 +16,10 @@ public class File {
     private Long fileSize;
     private String fileType;
     private String extension;
-    private Integer isFolder;
+    private Integer isFolder = 0;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     @TableLogic
-    private Integer deleted;
+    private Integer deleted = 0;
     private LocalDateTime deleteTime;
 }
